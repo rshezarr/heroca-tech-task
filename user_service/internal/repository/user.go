@@ -21,3 +21,12 @@ func NewUser(database *mongo.Database, collection string) *UserRepo {
 		db: database.Collection(collection),
 	}
 }
+
+func (r *UserRepo) Create(ctx context.Context, user internal.User) error {
+	_, err := r.db.InsertOne(ctx, user)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
