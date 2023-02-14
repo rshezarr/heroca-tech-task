@@ -17,3 +17,11 @@ func NewHandler(usecase *usecase.Usecase) *Handler {
 		service: usecase,
 	}
 }
+
+func (h *Handler) InitRoutes() *chi.Mux {
+	h.router.Post("/create-user", nil)
+
+	h.router.Get("/get-user/{email}", nil)
+
+	return h.router
+}
