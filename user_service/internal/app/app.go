@@ -2,6 +2,11 @@ package app
 
 import (
 	"context"
+	"fmt"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
 	"user_svc/internal"
 	"user_svc/internal/handler"
 	"user_svc/internal/repository"
@@ -33,4 +38,25 @@ func New() (*App, error) {
 		httpServer:  internal.NewServer(httpHandler.InitRoutes()),
 		httpHandler: httpHandler,
 	}, nil
+}
+
+func (a *App) RunApp() {
+	go func() {
+		if err := a.httpServer.StartServer(); err != nil {
+			log.Println(err)
+			return
+		}
+	}()
+	log.Println("http server started on :9091")
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	sig := <-sigChan
+	fmt.Println()
+	log.Println("Received terminate, graceful shutdown", sig)
+
+	if err := a.httpServer.Shutdown(); err != nil {
+		log.Println(err)
+		return
+	}
 }
