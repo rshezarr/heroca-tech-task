@@ -40,11 +40,10 @@ func New() (*App, error) {
 	}, nil
 }
 
-func (a *App) RunApp() {
+func (a *App) RunApp() error {
 	go func() {
 		if err := a.httpServer.StartServer(); err != nil {
-			log.Println(err)
-			return
+			return err
 		}
 	}()
 	log.Println("http server started on :9091")
@@ -56,7 +55,8 @@ func (a *App) RunApp() {
 	log.Println("Received terminate, graceful shutdown", sig)
 
 	if err := a.httpServer.Shutdown(); err != nil {
-		log.Println(err)
-		return
+		return err
 	}
+
+	return nil
 }
