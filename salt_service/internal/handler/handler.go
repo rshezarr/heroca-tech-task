@@ -17,3 +17,9 @@ func NewHandler(service *usecase.Usecase) *Handler {
 		service: service,
 	}
 }
+
+func (h *Handler) InitRoutes() *chi.Mux {
+	h.router.Post("/generate-salt", h.generateSalt)
+
+	return h.router
+}
