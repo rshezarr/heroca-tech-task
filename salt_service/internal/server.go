@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"context"
 	"net/http"
 	"time"
 
@@ -25,4 +26,11 @@ func NewServer(router *chi.Mux) *Server {
 
 func (s *Server) StartServer() error {
 	return s.server.ListenAndServe()
+}
+
+func (s *Server) Shutdown() error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute*3)
+	defer cancel()
+
+	return s.server.Shutdown(ctx)
 }
