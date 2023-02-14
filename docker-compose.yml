@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_db
+    restart: always
+    ports: 
+      - "27017:27017"
+  user_service:
+    restart: on-failure
+    build: ./user_service/
+    ports:
+      - "9091:9091"
+  generate_salt_service:
+    restart: on-failure
+    build: ./generate_salt_service/
+    ports:
+      - "9090:9090"
