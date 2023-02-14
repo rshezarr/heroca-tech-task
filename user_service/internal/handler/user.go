@@ -26,7 +26,7 @@ func (h *Handler) createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest(http.MethodPost, "http://localhost:9090/generate-salt", nil)
+	req, err := http.NewRequest(http.MethodPost, "http://salt_service:9090/generate-salt", nil)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
