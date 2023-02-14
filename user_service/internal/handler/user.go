@@ -63,7 +63,7 @@ func (h *Handler) createUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) getUser(w http.ResponseWriter, r *http.Request) {
 	email := chi.URLParam(r, "email")
 
 	user, err := h.service.User.Get(r.Context(), email)

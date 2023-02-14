@@ -19,9 +19,9 @@ func NewHandler(usecase *usecase.Usecase) *Handler {
 }
 
 func (h *Handler) InitRoutes() *chi.Mux {
-	h.router.Post("/create-user", nil)
+	h.router.Post("/create-user", h.createUser)
 
-	h.router.Get("/get-user/{email}", nil)
+	h.router.Get("/get-user/{email}", h.getUser)
 
 	return h.router
 }

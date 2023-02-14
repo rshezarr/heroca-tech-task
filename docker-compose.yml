@@ -11,8 +11,8 @@ services:
     build: ./user_service/
     ports:
       - "9091:9091"
-  generate_salt_service:
+  salt_service:
     restart: on-failure
-    build: ./generate_salt_service/
+    build: ./salt_service/
     ports:
       - "9090:9090"
