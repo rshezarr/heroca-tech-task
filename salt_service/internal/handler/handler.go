@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"salt_srv/internal/usecase"
+	"salt_svc/internal/usecase"
 
 	"github.com/go-chi/chi"
 )

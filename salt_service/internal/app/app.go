@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"salt_srv/internal"
-	"salt_srv/internal/handler"
-	"salt_srv/internal/usecase"
+	"salt_svc/internal"
+	"salt_svc/internal/handler"
+	"salt_svc/internal/usecase"
 	"syscall"
 )
 

@@ -1,4 +1,4 @@
-module salt_srv
+module salt_svc
 
 go 1.20
 

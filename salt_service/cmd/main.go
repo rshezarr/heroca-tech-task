@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"salt_srv/internal/app"
+	"salt_svc/internal/app"
 )
 
 func main() {

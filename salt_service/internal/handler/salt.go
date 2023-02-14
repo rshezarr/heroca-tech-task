@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"salt_srv/internal"
+	"salt_svc/internal"
 )
 
 func (h *Handler) generateSalt(w http.ResponseWriter, r *http.Request) {
