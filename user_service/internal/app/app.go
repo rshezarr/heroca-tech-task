@@ -2,6 +2,10 @@ package app
 
 import (
 	"context"
+	"user_svc/internal"
+	"user_svc/internal/handler"
+	"user_svc/internal/repository"
+	"user_svc/internal/usecase"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -9,7 +13,7 @@ import (
 type App struct {
 	db *mongo.Database
 
-	httpServer  *Server
+	httpServer  *internal.Server
 	httpHandler *handler.Handler
 }
 
@@ -22,11 +26,11 @@ func New() (*App, error) {
 	repo := repository.NewRepository(db)
 	usecase := usecase.NewUsecase(repo)
 
-	httpHandler := httpHandler.NewHandler(usecase)
+	httpHandler := handler.NewHandler(usecase)
 
 	return &App{
 		db:          db,
-		httpServer:  server.NewServer(httpHandler.InitRoutes()),
+		httpServer:  internal.NewServer(httpHandler.InitRoutes()),
 		httpHandler: httpHandler,
 	}, nil
 }
