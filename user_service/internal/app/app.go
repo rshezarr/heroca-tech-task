@@ -11,6 +11,7 @@ import (
 	"user_svc/internal/handler"
 	"user_svc/internal/repository"
 	"user_svc/internal/usecase"
+	"user_svc/pkg/database/mongodb"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -43,7 +44,8 @@ func New() (*App, error) {
 func (a *App) RunApp() error {
 	go func() {
 		if err := a.httpServer.StartServer(); err != nil {
-			return err
+			log.Println(err)
+			return
 		}
 	}()
 	log.Println("http server started on :9091")
