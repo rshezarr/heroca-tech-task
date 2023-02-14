@@ -22,3 +22,7 @@ func NewServer(router *chi.Mux) *Server {
 		},
 	}
 }
+
+func (s *Server) StartServer() error {
+	return s.server.ListenAndServe()
+}
