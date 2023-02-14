@@ -7,7 +7,10 @@ import (
 	"log"
 	"net/http"
 	"user_svc/internal"
+	"user_svc/internal/repository"
 	"user_svc/internal/usecase"
+
+	"github.com/go-chi/chi"
 )
 
 type SaltResponse struct {
@@ -58,4 +61,25 @@ func (h *Handler) createUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
+}
+
+func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+	email := chi.URLParam(r, "email")
+
+	user, err := h.service.User.Get(r.Context(), email)
+	if err != nil {
+		log.Println(err)
+		if errors.Is(err, repository.ErrUserNotFound) {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := json.NewEncoder(w).Encode(user); err != nil {
+		log.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
